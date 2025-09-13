@@ -1,9 +1,9 @@
 pipeline {
-    // Tell Jenkins to run this pipeline inside a Docker container
     agent {
         docker {
-            image 'docker:24.0.5' // A specific, stable version of the Docker client image
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount the host's Docker socket
+            image 'docker:24.0.5'
+            // Add '-u root' to run commands as the root user inside the agent
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
 
@@ -24,7 +24,6 @@ pipeline {
     post {
         always {
             echo 'Pipeline finished.'
-            // The docker command will now be available in the agent's PATH
             sh 'docker image prune -f'
         }
     }
