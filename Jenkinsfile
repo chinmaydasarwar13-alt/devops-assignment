@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'docker:24.0.5'
-            // Add '-u root' to run commands as the root user inside the agent
             args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
